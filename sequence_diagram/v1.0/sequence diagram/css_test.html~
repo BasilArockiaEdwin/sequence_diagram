@@ -1,0 +1,13 @@
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<script src="jquery-2.1.0.min.js"></script>
+
+<div class=wsd wsd_style="modern-blue" ><pre>
+
+Alice->Bob: Authentication Request
+Bob-->Alice: Authentication Response
+
+</pre></div><script type="text/javascript" src="http://www.websequencediagrams.com/service.js"></script>
+
+</script>
+

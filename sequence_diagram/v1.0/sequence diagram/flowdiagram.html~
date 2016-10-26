@@ -1,0 +1,96 @@
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<link rel="stylesheet" type="text/css" href="jquery-qtip.css">
+<script src="jquery-2.1.0.min.js"></script>
+<script src="raphael-min.js"></script>
+<script src="underscore-min.js"></script>
+<script src="sequence-diagram-min.js"></script>
+<script src="jquery-qtip.js"></script>
+
+<div id="diagram"></div>
+<script>
+
+ $( document ).ready(function() {
+	
+ });
+  //var diagram = Diagram.parse("A->B: Messassge");
+  //diagram.drawSVG("diagram", {theme: 'simple'}); //hand
+</script>
+
+<div class="diagram4">Title: Sequence Diagram Sample 1
+Timestamp->eNodeB: Dec 2016 07:30:05 AM
+eNodeB->MME: Normal line,tooltip:Normal line Normal line
+MME->HSS: Normal line,tooltip:sdjaojf asnfansd asdfn asdhnfa fajsdf asdjfa sfjasdf asjdf asfjas fjass fasjf asfjas fja dfsdfasddddddddddddddd
+Note over HSS: Note over B,tooltip:tool tip text
+HSS->>GWTs: Open arrow,tooltip:tool tip text
+GWTs-->>eNodeB: Dashed open arrow,tooltip:tool tip text
+
+
+
+</div>
+
+<div>
+D-->>A: Dashed open arrow
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow  
+</div> 
+
+<div class="diagram1" id='diagram1'>Title: Sequence Diagram Sample 2
+# Example of a comment.
+Note left of A: Note to the\n left of A
+Note right of A: Note to the\n right of A
+Note over A: Note over A
+Note over A,B: Note over both A and B
+</div>
+
+
+<div class="diagram2">Title: Sequence Diagram Sample 3
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+</div>
+
+<div class="diagram3">participant C
+participant B
+participant A
+Note right of A: By listing the participants\n you can change their order
+</div> 
+<script>
+
+$(function() {
+	$(".diagram").sequenceDiagram({theme: 'hand'});
+	$(".diagram4").sequenceDiagram({theme: 'simple'});
+	$(".diagram1").sequenceDiagram({theme: 'simple'});
+	$(".diagram2").sequenceDiagram({theme: 'simple'});
+	$(".diagram3").sequenceDiagram({theme: 'simple'});
+});
+
+</script>
+
