@@ -1262,4 +1262,6 @@
         }
     })
 }(window, document);
+
+
 //# sourceMappingURL=jquery.qtip.min.map

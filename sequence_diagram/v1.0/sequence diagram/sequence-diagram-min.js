@@ -1586,13 +1586,13 @@
         NOTE_OVERLAP = 15,
         TITLE_MARGIN = 0,
         TITLE_PADDING = 5,
-        SELF_SIGNAL_WIDTH = 20,
+        SELF_SIGNAL_WIDTH = 20	,
         PLACEMENT = Diagram.PLACEMENT,
         LINETYPE = Diagram.LINETYPE,
         ARROWTYPE = Diagram.ARROWTYPE,
         LINE = {
             stroke: "#000", //TODO LINE_COLOR
-            "stroke-width": 2
+            "stroke-width": 2  //TODO LINE_WIDTH
         },
         RECT = {
             fill: "#fff"
@@ -1650,20 +1650,115 @@
         },
         init_paper: function(container) {
 	    this._paper = new Raphael(container, 320, 200);
-	    this._paper.canvas.style.backgroundColor = '#ccd1ca';
+	    this._paper.canvas.style.backgroundColor = '#ccd1ca';	
 	   // this._paper.canvas.rect.attr("title",'The tooltip to be displayed on mouse hover');
 	   
         },
         init_font: function() {},
         draw_line: function(x1, y1, x2, y2) {
 	    var c2 = this._paper.line(x1, y1, x2, y2);
-	   
 		
-	    c2.node.onclick = function (e) { alert('OnClick'); alert(e);  c2.attr("fill", "red"); c2.attr("stroke", "red");}; 
+	    c2.node.onclick = function (e) 
+		{ /*alert('OnClick'); alert(e);*/  c2.attr("fill", "red"); c2.attr("stroke", "red");}; 
+			    //c2.attr("title",'Getting Tooltip???');
+				
+				$(c2.node).qtip({ content: { text: "Text" },
+			    style: {
+				background: '#000000',
+				color: '#ffffff',
+				border: { width: 20, radius: 15, color: '#ff0000' }
+			    },
+			    position: {
+				corner: {
+				    target: 'topRight',
+				    tooltip: 'bottomLeft'
+				}
+			    }
+			});
+
 	    c2.mouseover(function (e) {
-                this[0].style.cursor = "pointer";                
+                this[0].style.cursor = "pointer";  
+				
             })
             c2.mouseout(function (e) {
+				
+                this[0].style.cursor = "";
+            })
+	    c2.hover(function (e) {
+               // alert("hover-->"+e);
+            })
+            return c2;
+        },
+				
+		
+		draw_line_cust: function(x1, y1, x2, y2,customTxt) {
+	    var c2 = this._paper.line(x1, y1, x2, y2);
+		            var className = x1+y1+x2+y2;
+					//alert(className);
+					
+	    			c2.node.setAttribute("class","rightclick");
+					c2.node.oncontextmenu =  $(function() {
+        $.contextMenu({
+            selector: '.rightclick', 
+            callback: function(key, options) {
+              //  var m = "clicked: " + key;
+			      var myWindow = window.open("www.google.com", "mywindow", "location=1,resizable=1,status=1,scrollbars=1,width=400,height=400");
+    myWindow.moveTo(10, 10);
+
+               // window.console && console.log(m) || alert(m); 
+            },
+            items: {
+               // "Packet decode": {name: "Edit", icon: "edit"},
+                "cut": {name: "Packet Decode", icon: "cut"},
+               /*copy: {name: "Copy", icon: "copy"},
+                "paste": {name: "Paste", icon: "paste"},
+                "delete": {name: "Delete", icon: "delete"},
+                "sep1": "---------",
+                "quit": {name: "Quit", icon: function(){
+                    return 'context-menu-icon context-menu-icon-quit';
+                }}*/
+            }
+        });
+
+        $('.context-menu-one').on('click', function(e){
+            console.log('clicked', this);
+        })    
+    });
+	 c2.attr("stroke", "#000");
+c2.attr("stroke-width", "200");
+ c2.attr("opacity", 0.5);
+
+		//c2.node.ondblclick = function(e) { 			    var myWindow = window.open("www.w3schools.com", "", "width=400,height=400");}
+	   // c2.node.onclick = function (e) { alert('OnClick'); alert(e);  c2.attr("fill", "red"); c2.attr("stroke", "red");}; 
+			    //c2.attr("title",'Getting Tooltip???');
+				//alert(customTxt)
+				$(c2.node).qtip({ content: { text: customTxt.split(',')[1] },
+			    style: {
+				classes: 'qtip-green ',
+				background: '#000000',
+				color: '#ffffff',
+				border: { width: 20, radius: 15, color: '#ff0000' }
+			    },
+			    position: {
+					//at: 'left center', // at the bottom right of...
+
+				/*	adjust: {
+						x: -x+107
+						//y:0
+					}*/	
+				corner: {
+				    target: 'topRight',
+				    tooltip: 'topLeft'
+				}
+			    }
+			});
+
+	    c2.mouseover(function (e) {
+                this[0].style.cursor = "pointer";  
+				
+            })
+            c2.mouseout(function (e) {
+				
                 this[0].style.cursor = "";
             })
 	    c2.hover(function (e) {
@@ -1677,10 +1772,28 @@
 	    var display_text = "Hello";
 	    //this._paper.text(x, y, "Raphael!!!");
             var c1 = this._paper.rect(x, y, w, h);
-	    c1.node.onclick = function () { alert('Rect OnClick'); c1.attr("fill", "blue");}; 
-	    c1.attr("title",'Hi Dakota Sequence Diagram sfsfsdfsdsdf \n sfsdfsdf');
+	    c1.node.onclick = function () { /*alert('Rect OnClick');*/ c1.attr("fill", "blue");}; 
+	    c1.attr("title",'Hi Dakota Sequence Diagram eee \n sfsdfsdf');
 	    c1.attr("fill", "#57a603");
 	    c1.attr("stroke", "#57a603");
+       //TODO c1.node.oncontextmenu = function(){alert("right click");};
+		/*Added For Right Click Event*/
+		/*if (document.addEventListener) { // IE >= 9; other browsers
+        document.addEventListener('contextmenu', function(e) {
+            alert("You've tried to open context menu"); //here you draw your own menu
+            e.preventDefault();
+        /* var myWindow = window.open("www.w3schools.com", "", "width=400,height=400"); */
+        /*    }, false);
+    } else { // IE < 9
+        document.attachEvent('oncontextmenu', function() {
+            //alert("You've tried to open context menu");
+    var myWindow = window.open("www.w3schools.com", "", "width=400,height=400");
+            window.event.returnValue = false;
+        });
+    }*/
+	
+	 /*Ends Here*/
+	
 	    
             c1.mouseover(function (e) {
                 this[0].style.cursor = "pointer";            
@@ -1788,7 +1901,7 @@
                 x = (bX - aX) / 2 + aX,
                 y = offsetY + SIGNAL_MARGIN + 2 * SIGNAL_PADDING;
             this.draw_text(x, y, signal.message, this._font), y = offsetY + signal.height - SIGNAL_MARGIN - SIGNAL_PADDING;
-            var line = this.draw_line(aX, y, bX, y);
+            var line = this.draw_line_cust(aX, y, bX, y,signal.message);
             line.attr(LINE), line.attr({
                 "arrow-end": this.arrow_types[signal.arrowtype] + "-wide-long",
                 "stroke-dasharray": this.line_types[signal.linetype]
@@ -1825,8 +1938,13 @@
 	   
             if(text.indexOf(",")>=0){ //TODO change , delimiter
 		//t.attr({ fill: 'white',title: text.split(',')[1].replace("tooltip:","")})
+		
+		
+		
+
 			t.attr({ fill: 'white'})
-			 $(t.node).qtip({ content: { text: text.split(',')[1].replace("tooltip:","") },
+			 
+			/*  $(t.node).qtip({ content: { text: text.split(',')[1].replace("tooltip:","") },
 			    style: {
 				background: '#000000',
 				color: '#ffffff',
@@ -1838,7 +1956,40 @@
 				    tooltip: 'bottomLeft'
 				}
 			    }
+			});*/
+			
+			//TODO t.node.oncontextmenu = function(){alert("right click");};
+			  $(t.node).qtip({ content: { text: text.split(',')[2] },
+			    style: {
+					classes: 'qtip-green ',
+				background: '#000000',
+				color: '#ffffff',
+				border: { width: 20, radius: 15, color: '#ff0000' }
+			    },
+			   /* position: {
+				corner: {
+				    target: 'topRight',
+				    tooltip: 'bottomLeft'
+				}
+			    }*/
+				position: {
+					corner: {
+				    target: 'topRight',
+				    tooltip: 'bottomLeft'
+				},
+				at: 'left center', // at the bottom right of...
+
+					adjust: {
+						x: -x+100,
+						//y:0
+					}
+				}
+				,
+				
+   		
 			});
+			
+			
 		
 	    }else{
 		t.attr({ fill: 'white',title:text})
@@ -1861,6 +2012,7 @@
             rect.attr(LINE), x = getCenterX(box), y = getCenterY(box), this.draw_text(x, y, text, font)
         }
     });
+
     var RaphaelTheme = function(diagram) {
         this.init(diagram)
     };
@@ -1884,6 +2036,7 @@
         },
         draw_line: function(x1, y1, x2, y2) {
             return this._paper.handLine(x1, y1, x2, y2)
+			
         },
         draw_rect: function(x, y, w, h) {
             return this._paper.handRect(x, y, w, h)
