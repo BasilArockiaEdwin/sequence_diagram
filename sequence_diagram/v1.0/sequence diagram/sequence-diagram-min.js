@@ -1648,9 +1648,10 @@
             var l = this.line_types = {};
             l[LINETYPE.SOLID] = "", l[LINETYPE.DOTTED] = "-"
         },
+		
         init_paper: function(container) {
 	    this._paper = new Raphael(container, 320, 200);
-	    this._paper.canvas.style.backgroundColor = '#ccd1ca';	
+	    this._paper.canvas.style.backgroundColor = '#d0e8e6';	
 	   // this._paper.canvas.rect.attr("title",'The tooltip to be displayed on mouse hover');
 	   
         },
@@ -1693,40 +1694,38 @@
 		
 		draw_line_cust: function(x1, y1, x2, y2,customTxt) {
 	    var c2 = this._paper.line(x1, y1, x2, y2);
-		            var className = x1+y1+x2+y2;
-					//alert(className);
-					
+		            
 	    			c2.node.setAttribute("class","rightclick");
 					c2.node.oncontextmenu =  $(function() {
         $.contextMenu({
             selector: '.rightclick', 
-            callback: function(key, options) {
-              //  var m = "clicked: " + key;
-			      var myWindow = window.open("www.google.com", "mywindow", "location=1,resizable=1,status=1,scrollbars=1,width=400,height=400");
-    myWindow.moveTo(10, 10);
+				callback: function(key, options) {
+				  //  var m = "clicked: " + key;
+					  var myWindow = window.open("www.google.com", "mywindow", "location=1,resizable=1,status=1,scrollbars=1,width=400,height=400");
+					  myWindow.moveTo(10, 10);
 
-               // window.console && console.log(m) || alert(m); 
-            },
-            items: {
-               // "Packet decode": {name: "Edit", icon: "edit"},
-                "cut": {name: "Packet Decode", icon: "cut"},
-               /*copy: {name: "Copy", icon: "copy"},
-                "paste": {name: "Paste", icon: "paste"},
-                "delete": {name: "Delete", icon: "delete"},
-                "sep1": "---------",
-                "quit": {name: "Quit", icon: function(){
-                    return 'context-menu-icon context-menu-icon-quit';
-                }}*/
-            }
-        });
+				   // window.console && console.log(m) || alert(m); 
+				},
+				items: {
+				   // "Packet decode": {name: "Edit", icon: "edit"},
+					"cut": {name: "Packet Decode", icon: "cut"},
+				   /*copy: {name: "Copy", icon: "copy"},
+					"paste": {name: "Paste", icon: "paste"},
+					"delete": {name: "Delete", icon: "delete"},
+					"sep1": "---------",
+					"quit": {name: "Quit", icon: function(){
+						return 'context-menu-icon context-menu-icon-quit';
+					}}*/
+				}
+			});
 
         $('.context-menu-one').on('click', function(e){
             console.log('clicked', this);
         })    
     });
 	 c2.attr("stroke", "#000");
-c2.attr("stroke-width", "200");
- c2.attr("opacity", 0.5);
+c2.attr("stroke-width", 2000);
+ c2.attr("opacity", 1);
 
 		//c2.node.ondblclick = function(e) { 			    var myWindow = window.open("www.w3schools.com", "", "width=400,height=400");}
 	   // c2.node.onclick = function (e) { alert('OnClick'); alert(e);  c2.attr("fill", "red"); c2.attr("stroke", "red");}; 
@@ -1742,10 +1741,7 @@ c2.attr("stroke-width", "200");
 			    position: {
 					//at: 'left center', // at the bottom right of...
 
-				/*	adjust: {
-						x: -x+107
-						//y:0
-					}*/	
+						
 				corner: {
 				    target: 'topRight',
 				    tooltip: 'topLeft'
@@ -1851,7 +1847,7 @@ c2.attr("stroke-width", "200");
                 }
                 actor_ensure_distance(a, b, s.width + extra_width), this._signals_height += s.height
             }, this);
-            var actors_x = 0;
+            var actors_x = 100;
             return _.each(actors, function(a) {
                 a.x = Math.max(actors_x, a.x), _.each(a.distances, function(distance, b) {
                     "undefined" != typeof distance && (b = actors[b], distance = Math.max(distance, a.width / 2, b.width / 2), b.x = Math.max(b.x, a.x + a.width / 2 + distance - b.width / 2))
@@ -1903,7 +1899,7 @@ c2.attr("stroke-width", "200");
             this.draw_text(x, y, signal.message, this._font), y = offsetY + signal.height - SIGNAL_MARGIN - SIGNAL_PADDING;
             var line = this.draw_line_cust(aX, y, bX, y,signal.message);
             line.attr(LINE), line.attr({
-                "arrow-end": this.arrow_types[signal.arrowtype] + "-wide-long",
+                "arrow-end": this.arrow_types[signal.arrowtype] + "classic-wide-long",
                 "stroke-dasharray": this.line_types[signal.linetype]
             })
         },
@@ -1932,15 +1928,16 @@ c2.attr("stroke-width", "200");
         },
         draw_text: function(x, y, text, font) {
 	   // alert(text);
+	   
             var t, paper = this._paper,
                 f = font || {};
             f._obj ? t = paper.print_center(x, y, text, f._obj, f["font-size"]) : (t = paper.text(x, y, text.split(',')[0]), t.attr(f));
-	   
+	  
             if(text.indexOf(",")>=0){ //TODO change , delimiter
 		//t.attr({ fill: 'white',title: text.split(',')[1].replace("tooltip:","")})
 		
-		
-		
+		   
+		 paper.text(11,y, text.split(',')[2]);//text.split(',')[0]	
 
 			t.attr({ fill: 'white'})
 			 
@@ -1957,6 +1954,7 @@ c2.attr("stroke-width", "200");
 				}
 			    }
 			});*/
+			
 			
 			//TODO t.node.oncontextmenu = function(){alert("right click");};
 			  $(t.node).qtip({ content: { text: text.split(',')[2] },
@@ -1981,7 +1979,7 @@ c2.attr("stroke-width", "200");
 
 					adjust: {
 						x: -x+100,
-						//y:0
+						y:0
 					}
 				}
 				,
