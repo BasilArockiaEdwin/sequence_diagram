@@ -1649,9 +1649,27 @@
             l[LINETYPE.SOLID] = "", l[LINETYPE.DOTTED] = "-"
         },
 		
-        init_paper: function(container) {
+        init_paper: function(container) {	
 	    this._paper = new Raphael(container, 320, 200);
-	    this._paper.canvas.style.backgroundColor = '#d0e8e6';	
+	
+
+
+/*var img = this._paper.image("http://svg.dabbles.info/tux.png", -150, 100, 285, 850)
+          .attr({ "clip-rect": "0,40,300,400" }); */	
+
+
+/*var img=this._paper;
+img.attr({
+    "stroke-width": 0,
+    stroke: 'red',
+        "opacity": 0.25,
+    fill: "10-blue-red"
+});*/
+
+
+//var img = paper.image("foo.png", 10, 10, 80, 80);
+//img.attr({ "clip-rect": "20,20,30,30" });	
+	  //  this._paper.canvas.style.backgroundColor = '#d0e8e6';	
 	   // this._paper.canvas.rect.attr("title",'The tooltip to be displayed on mouse hover');
 	   
         },
@@ -1663,7 +1681,7 @@
 		{ /*alert('OnClick'); alert(e);*/  c2.attr("fill", "red"); c2.attr("stroke", "red");}; 
 			    //c2.attr("title",'Getting Tooltip???');
 				
-				$(c2.node).qtip({ content: { text: "Text" },
+				/*$(c2.node).qtip({ content: { text: "Text" },
 			    style: {
 				background: '#000000',
 				color: '#ffffff',
@@ -1675,19 +1693,37 @@
 				    tooltip: 'bottomLeft'
 				}
 			    }
-			});
+			});*/
+/*c2.node.onmouseover = function () {
+                c2.attr("fill", "blue");
+            };
+            c2.node.onmouseout = function () {
+                c2.attr("fill", "#303030");
+            };*/
+
+/*
+(function (c2) {
+  c2.hover(function(){
+    c2.attr({"stroke": "#e74c3c"});
+  },
+  function(){
+    c2.attr({"stroke": "#000"});
+});    
+})(c2) */
+
 
 	    c2.mouseover(function (e) {
-                this[0].style.cursor = "pointer";  
+                this[0].style.cursor = "pointer"; 
+		this[0].bgColor='white'; this[0].style.color='black';
 				
             })
             c2.mouseout(function (e) {
 				
                 this[0].style.cursor = "";
             })
-	    c2.hover(function (e) {
+	    //c2.hover(function (e) {
                // alert("hover-->"+e);
-            })
+           // })
             return c2;
         },
 				
@@ -1695,13 +1731,14 @@
 		draw_line_cust: function(x1, y1, x2, y2,customTxt) {
 	    var c2 = this._paper.line(x1, y1, x2, y2);
 		            
-	    			c2.node.setAttribute("class","rightclick");
-					c2.node.oncontextmenu =  $(function() {
+	c2.node.setAttribute("class","rightclick");
+	c2.node.oncontextmenu =  $(function() {
         $.contextMenu({
             selector: '.rightclick', 
 				callback: function(key, options) {
 				  //  var m = "clicked: " + key;
-					  var myWindow = window.open("www.google.com", "mywindow", "location=1,resizable=1,status=1,scrollbars=1,width=400,height=400");
+
+				var myWindow = window.open("www.google.com", "mywindow", "location=1,resizable=1,status=1,scrollbars=1,width=400,height=400");
 					  myWindow.moveTo(10, 10);
 
 				   // window.console && console.log(m) || alert(m); 
@@ -1724,8 +1761,16 @@
         })    
     });
 	 c2.attr("stroke", "#000");
-c2.attr("stroke-width", 2000);
- c2.attr("opacity", 1);
+         c2.attr("stroke-width", 2000);
+         c2.attr("opacity", 1);
+	 (function (c2) {
+  c2.hover(function(){
+    c2.attr({"stroke": "#e74c3c"});
+  },
+  function(){
+    c2.attr({"stroke": "#000"});
+});    
+})(c2)
 
 		//c2.node.ondblclick = function(e) { 			    var myWindow = window.open("www.w3schools.com", "", "width=400,height=400");}
 	   // c2.node.onclick = function (e) { alert('OnClick'); alert(e);  c2.attr("fill", "red"); c2.attr("stroke", "red");}; 
@@ -1768,10 +1813,10 @@ c2.attr("stroke-width", 2000);
 	    var display_text = "Hello";
 	    //this._paper.text(x, y, "Raphael!!!");
             var c1 = this._paper.rect(x, y, w, h);
-	    c1.node.onclick = function () { /*alert('Rect OnClick');*/ c1.attr("fill", "blue");}; 
+	    c1.node.onclick = function () { /*alert('Rect OnClick');*/ c1.attr("fill", "#000	");}; 
 	    c1.attr("title",'Hi Dakota Sequence Diagram eee \n sfsdfsdf');
-	    c1.attr("fill", "#57a603");
-	    c1.attr("stroke", "#57a603");
+	    c1.attr("fill", "white");
+	    c1.attr("stroke", "white");
        //TODO c1.node.oncontextmenu = function(){alert("right click");};
 		/*Added For Right Click Event*/
 		/*if (document.addEventListener) { // IE >= 9; other browsers
@@ -1835,6 +1880,7 @@ c2.attr("stroke-width", 2000);
                 a.text_bb = bb, a.x = 0, a.y = 0, a.width = bb.width + 2 * (ACTOR_PADDING + ACTOR_MARGIN), a.height = bb.height + 2 * (ACTOR_PADDING + ACTOR_MARGIN), a.distances = [], a.padding_right = 0, this._actors_height = Math.max(a.height, this._actors_height)
             }, this), _.each(signals, function(s) {
                 var a, b, bb = paper.text_bbox(s.message.indexOf(',')>0?s.message.split(',')[0]:s.message, font);//TODO change , identifier
+   
                 s.text_bb = bb, s.width = bb.width, s.height = bb.height;
                 var extra_width = 0;
                 if ("Signal" == s.type) s.width += 2 * (SIGNAL_MARGIN + SIGNAL_PADDING), s.height += 2 * (SIGNAL_MARGIN + SIGNAL_PADDING), s.isSelf() ? (a = s.actorA.index, b = a + 1, s.width += SELF_SIGNAL_WIDTH) : (a = Math.min(s.actorA.index, s.actorB.index), b = Math.max(s.actorA.index, s.actorB.index));
@@ -1847,7 +1893,7 @@ c2.attr("stroke-width", 2000);
                 }
                 actor_ensure_distance(a, b, s.width + extra_width), this._signals_height += s.height
             }, this);
-            var actors_x = 100;
+            var actors_x = 200;
             return _.each(actors, function(a) {
                 a.x = Math.max(actors_x, a.x), _.each(a.distances, function(distance, b) {
                     "undefined" != typeof distance && (b = actors[b], distance = Math.max(distance, a.width / 2, b.width / 2), b.x = Math.max(b.x, a.x + a.width / 2 + distance - b.width / 2))
@@ -1935,11 +1981,23 @@ c2.attr("stroke-width", 2000);
 	  
             if(text.indexOf(",")>=0){ //TODO change , delimiter
 		//t.attr({ fill: 'white',title: text.split(',')[1].replace("tooltip:","")})
-		
-		   
-		 paper.text(11,y, text.split(',')[2]);//text.split(',')[0]	
-
-			t.attr({ fill: 'white'})
+		  
+		var paper1= t.paper.text(75,y+10, text.split(',')[2]).attr({fill:'#000','font-size': 15,"font-family": "Arial, Helvetica, sans-serif"});
+//paper.canvas.style.backgroundColor = '#000';
+t.attr({
+                fill: '#000',
+                //stroke: 'white',
+		"font-family": "Arial, Helvetica, sans-serif"
+            });
+            t.onmouseover = function() {
+                paper1.attr({ fill: '#303030',
+                stroke: '#000'});
+            };
+            t.onmouseout = function() {
+                paper1.attr({ fill: '#000',
+                stroke: '#000'});
+            };		
+		 
 			 
 			/*  $(t.node).qtip({ content: { text: text.split(',')[1].replace("tooltip:","") },
 			    style: {
@@ -1953,9 +2011,7 @@ c2.attr("stroke-width", 2000);
 				    tooltip: 'bottomLeft'
 				}
 			    }
-			});*/
-			
-			
+			});
 			//TODO t.node.oncontextmenu = function(){alert("right click");};
 			  $(t.node).qtip({ content: { text: text.split(',')[2] },
 			    style: {
@@ -1969,7 +2025,7 @@ c2.attr("stroke-width", 2000);
 				    target: 'topRight',
 				    tooltip: 'bottomLeft'
 				}
-			    }*/
+			    }
 				position: {
 					corner: {
 				    target: 'topRight',
@@ -1983,31 +2039,31 @@ c2.attr("stroke-width", 2000);
 					}
 				}
 				,
-				
-   		
-			});
+			});*/
 			
 			
 		
 	    }else{
-		t.attr({ fill: 'white',title:text})
+		t.attr({ fill: '#000',title:text})
 	    }
             
             var bb = t.getBBox(),
                 r = paper.rect(bb.x, bb.y, bb.width, bb.height);
 		
             r.attr({
-                fill: "#57a603",
-                stroke: "#57a603" 	        
+                //fill: "#dcffce",
+                stroke: "#dcffce" 	        
   	    }), t.toFront()
         },
         draw_text_box: function(box, text, margin, padding, font) {
+            //alert(text);
             var x = box.x + margin,
                 y = box.y + margin,
                 w = box.width - 2 * margin,
                 h = box.height - 2 * margin,
                 rect = this.draw_rect(x, y, w, h);
             rect.attr(LINE), x = getCenterX(box), y = getCenterY(box), this.draw_text(x, y, text, font)
+	    //rect.attr(LINE), x = box.x, y = box.y, this.draw_text(x, y, text, font)
         }
     });
 
