@@ -1,0 +1,29 @@
+line no 1738:
+	    var c2 = this._paper.line(x1, y1, x2, y2,customTxt);
+
+
+line nos : 1773-1781
+c2.hover(function(){
+   //alert(customTxt);
+    c2.attr({"stroke": "#e74c3c"});$("#deq_1234_"+customTxt.split(',')[3]).show(); //document.getElementById('deq_1234').style.display=none;
+   var thisPath = $('#test'); /*alert($('#test').val());*/thisPath.style.display='none';
+  },
+  function(){
+    c2.attr({"stroke": "#000"});
+	});    
+})(c2)
+
+Line numbers 1810-1814:
+c2.mouseout(function (e) {
+
+                this[0].style.cursor = "";
+$("#deq_1234_"+customTxt.split(',')[3]).hide();
+            })
+
+
+Line numbers 1996-1999:
+var paper1= t.paper.text(75,y+10, text.split(',')[2]).attr({fill:'#e74c3c','font-size': 15,"font-family": "Arial, Helvetica, sans-serif"});
+                 paper1.node.id="deq_1234_"+text.split(',')[3];
+$("#deq_1234_"+text.split(',')[3]).hide();
+
+
